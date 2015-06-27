@@ -1,44 +1,4 @@
-#include "MultiThreadSort.h"
-
-int PartitionArr(int * arr, int low, int high)
-{
-  int pivotIndex = (low + high) / 2;
-  //swap pivot
-  int pivot = arr[pivotIndex];
-  arr[pivotIndex] = arr[high];
-  arr[high] = pivot;
-
-  //return val
-  int parIndex = low;
-
-  for(int i = low; i <= high - 1; i++)
-  {
-    if( arr[i] < pivot)
-    {
-      int temp = arr[parIndex];
-      arr[parIndex] = arr[i];
-      arr[i] = temp;
-      parIndex++;
-    }
-  }
-  int temp = arr[parIndex];
-  arr[parIndex] = arr[high];
-  arr[high] = temp;
-
-  return parIndex;
-}
-
-void QuickSort(int  * arr, int low, int high)
-{
-
-  if(low < high)
-  {
-    int p = PartitionArr(arr, low, high);
-    QuickSort(arr, low, p - 1);
-    QuickSort(arr, p + 1, high);
-  }
-
-}
+#include "QuickSort.h"
 
 int main()
 {
@@ -54,10 +14,9 @@ int main()
   }
 
   printf("Sorting...\n");
-  QuickSort(arr, 0, size - 1);
-  for(int i = 0; i < size; i++)
-  {
-    printf("%d ", arr[i]);
-  }
+  QuickSort * sorter = new QuickSort(arr, size);
+  sorter->Sort(0, size - 1);
+  sorter->PrintSorted();
+
   return 1;
 }
